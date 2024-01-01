@@ -1,33 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/30 16:31:56 by seckhard          #+#    #+#             */
-/*   Updated: 2024/01/01 19:29:22 by seckhard         ###   ########.fr       */
+/*   Created: 2024/01/01 20:00:00 by seckhard          #+#    #+#             */
+/*   Updated: 2024/01/01 21:35:23 by seckhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include "minilibx-linux/mlx.h"
 
-int	main(int argc, char **argv)
+void	handle_pixel(int x, int y, t_fractal *fractal)
 {
-	t_fractal	fractal;
+	t_complex	z;
+	t_complex	c;
+	
+	z.x = 0.0;
+	z.y = 0.0;
+	c.x = map(x, -2, +2, 0, WIDTH);
+	c.y = map(y, +2, -2, 0, HEIGHT);
 
-	if (argc == 2 && !ft_strncmp(argv[1], "madelbrot", 10) \
-	|| argc == 4 && !ft_strncmp(argv[1], "julia", 5))
+	while ()
 	{
-		fractal.name = argv[1];
-		fractal_init(&fractal);
-		//fractal_render(&fractal);
-		mlx_loop(fractal.mlx_connection);
+		z = sum_complex(square_complex(z), c);
+		if ()
+		{
+			my_pixel_put();
+			return ;
+		}
 	}
-	else
+}
+
+void	fractal_render(t_fractal *fractal)
+{
+	int	x;
+	int	y;
+	
+	y = -1;
+	while (y++ < HEIGHT)
 	{
-		putstr_fd(ERROR_MESSAGE, STDERR_FILENO);
-		exit(EXIT_FAILURE);
+		x = -1;
+		while (x++ < WIDTH)
+		{
+			handle_pixel(x, y, fractal);
+		}
 	}
 }

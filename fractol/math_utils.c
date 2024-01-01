@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   math_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/30 16:31:56 by seckhard          #+#    #+#             */
-/*   Updated: 2024/01/01 19:29:22 by seckhard         ###   ########.fr       */
+/*   Created: 2024/01/01 21:04:07 by seckhard          #+#    #+#             */
+/*   Updated: 2024/01/01 21:38:08 by seckhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include "minilibx-linux/mlx.h"
 
-int	main(int argc, char **argv)
+double map(double unscaled_num, double new_min, double new_max, double old_min, double old_max)
 {
-	t_fractal	fractal;
+	return (new_max - new_min) * (unscaled_num - old_min) / (old_max - old_min) + new_min;
+}
 
-	if (argc == 2 && !ft_strncmp(argv[1], "madelbrot", 10) \
-	|| argc == 4 && !ft_strncmp(argv[1], "julia", 5))
-	{
-		fractal.name = argv[1];
-		fractal_init(&fractal);
-		//fractal_render(&fractal);
-		mlx_loop(fractal.mlx_connection);
-	}
-	else
-	{
-		putstr_fd(ERROR_MESSAGE, STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
+t_complex	sum_complex(t_complex z1, t_complex z2)
+{
+	t_complex	result;
+	result.x = z1.x + z2.x;
+	result.y = z1.y + z2.y;
+	return (result);
+}
+
+t_complex	square_complex(t_complex z)
+{
+	
 }
