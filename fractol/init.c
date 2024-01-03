@@ -6,7 +6,7 @@
 /*   By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 17:11:39 by seckhard          #+#    #+#             */
-/*   Updated: 2024/01/01 19:35:08 by seckhard         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:57:30 by seckhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,34 @@ static void	malloc_error(void)
 {
 	perror("Problems with malloc");
 	exit(EXIT_FAILURE);
+}
+
+static void	data_init(t_fractal	*fractal)
+{
+	fractal->escape_value = 4;
+	fractal->iterations_definition = 42;
+	fractal->shift_x = 0.0;
+	fractal->shift_y = 0.0;
+	fractal->zoom = 1.0;
+}
+
+static void	events_init(t_fractal *fractal)
+{
+	mlx_hook(fractal->mlx_window,
+			KeyPress,
+			KeyPressMask,
+			key_handler,
+			fractal);
+	mlx_hook(fractal->mlx_window,
+			ButtonPress,
+			ButtonPressMask,
+			mouse_handler,
+			fractal);
+	mlx_hook(fractal->mlx_window,
+			DestroyNotify,
+			StructureNotifyMask,
+			close_handler,
+			fractal);
 }
 
 void	fractal_init(t_fractal *fractal)
@@ -45,6 +73,6 @@ void	fractal_init(t_fractal *fractal)
 												&fractal->img.bpp,
 												&fractal->img.line_len,
 												&fractal->img.endian);
-	//events_init(fractal);
-	//data_init(fractal);
+	events_init(fractal);
+	data_init(fractal);
 }
