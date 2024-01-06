@@ -6,7 +6,7 @@
 /*   By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 17:11:39 by seckhard          #+#    #+#             */
-/*   Updated: 2024/01/03 17:57:30 by seckhard         ###   ########.fr       */
+/*   Updated: 2024/01/06 19:38:35 by seckhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ static void	events_init(t_fractal *fractal)
 			DestroyNotify,
 			StructureNotifyMask,
 			close_handler,
+			fractal);
+	mlx_hook(fractal->mlx_window,
+			MotionNotify,
+			PointerMotionMask,
+			julia_track,
 			fractal);
 }
 

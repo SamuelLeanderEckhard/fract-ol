@@ -6,7 +6,7 @@
 /*   By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 16:22:55 by seckhard          #+#    #+#             */
-/*   Updated: 2024/01/03 17:57:12 by seckhard         ###   ########.fr       */
+/*   Updated: 2024/01/06 19:54:55 by seckhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@
 // Define psychedelic color
 #define MAGENTA_BLUE_MIX    0xFF00FF
 #define CYAN_YELLOW_MIX     0x00FFFF
-#define PURPLE_PINK_MIX      0x9900FF
-#define PINK_MAGENTA_MIX     0xFF0099
-#define ORANGE_GREEN_MIX      0xFFA500  // Orange-Green Mix
-#define LIME_PURPLE_MIX       0x80FF00  // Lime-Purple Mix
-#define TEAL_PINK_MIX         0x008080  // Teal-Pink Mix
-#define INDIGO_YELLOW_MIX     0x4B0082  // Indigo-Yellow Mix
+#define PURPLE_PINK_MIX		0x9900FF
+#define PINK_MAGENTA_MIX	0xFF0099
+#define ORANGE_GREEN_MIX	0xFFA500  // Orange-Green Mix
+#define LIME_PURPLE_MIX		0x80FF00  // Lime-Purple Mix
+#define TEAL_PINK_MIX		0x008080  // Teal-Pink Mix
+#define INDIGO_YELLOW_MIX	0x4B0082  // Indigo-Yellow Mix
 
 typedef struct s_complex
 {
@@ -76,11 +76,14 @@ typedef struct	s_fractal
 	double	shift_x;
 	double	shift_y;
 	double	zoom;
+	double	julia_x;
+	double	julia_y;
 }			t_fractal;
 
 //string utils//
 int		ft_strncmp(char *s1, char *s2, int n);
 void	putstr_fd(char *s, int fd);
+double	atodbl(char *s);
 
 //init//
 void	fractal_init(t_fractal *fractal);
@@ -97,5 +100,6 @@ t_complex	square_complex(t_complex z);
 int	key_handler(int keysym, t_fractal *fractal);
 int	close_handler(t_fractal *fractal);
 int	mouse_handler(int button, int x, int y, t_fractal *fractal);
+int	julia_track(int x, int y, t_fractal *fractal);
 
 #endif

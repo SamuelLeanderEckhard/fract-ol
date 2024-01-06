@@ -6,7 +6,7 @@
 /*   By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 20:00:00 by seckhard          #+#    #+#             */
-/*   Updated: 2024/01/03 17:59:05 by seckhard         ###   ########.fr       */
+/*   Updated: 2024/01/06 20:03:07 by seckhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,20 @@ static void	my_pixel_put(int x, int y, t_img *img, int color)
 	*(unsigned int *)(img->pixels_ptr + offset) = color;
 }
 
+static void	mandel_vs_julia(t_complex *z, t_complex *c, t_fractal *fractal)
+{
+	if (!ft_strncmp(fractal->name, "julia", 5))
+	{
+		c->x = fractal->julia_x;
+		c->y = fractal->julia_y;
+	}
+	else
+	{
+		c->x = z->x;
+		c->y = z->y;
+	}
+}
+
 static void	handle_pixel(int x, int y, t_fractal *fractal)
 {
 	t_complex	z;
@@ -27,10 +41,9 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 	int			color;
 	
 	i = 0;
-	z.x = 0.0;
-	z.y = 0.0;
-	c.x = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->shift_x;
-	c.y = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+	z.x = (map(x, -2, +2, 0, WIDTH) * fractal->zoom) + fractal->shift_x;
+	z.y = (map(y, +2, -2, 0, HEIGHT) * fractal->zoom) + fractal->shift_y;
+	mandel_vs_julia(&z, &c, fractal);
 	while (i < fractal->iterations_definition)
 	{
 		z = sum_complex(square_complex(z), c);
@@ -52,10 +65,10 @@ void	fractal_render(t_fractal *fractal)
 	int	y;
 	
 	y = -1;
-	while (y++ < HEIGHT)
+	while (++y < HEIGHT)
 	{
 		x = -1;
-		while (x++ < WIDTH)
+		while (++x < WIDTH)
 		{
 			handle_pixel(x, y, fractal);
 		}
