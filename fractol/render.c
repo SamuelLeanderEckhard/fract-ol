@@ -6,28 +6,22 @@
 /*   By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 20:00:00 by seckhard          #+#    #+#             */
-/*   Updated: 2024/01/15 22:35:46 by seckhard         ###   ########.fr       */
+/*   Updated: 2024/01/19 23:05:31 by seckhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void	my_pixel_put(int x, int y, t_img *img, int color)
+//***puts pixel at a specified coordinate.
+static void	ft_pixel_put(int x, int y, t_img *img, int color)
 {
 	int	offset;
 
-	offset = (y * img->line_len) + (x * (img->bpp / 8));
-	if (x >= 0 && x < img->width && y >= 0 && y < img->height)
-	{
-		*(unsigned int *)(img->pixels_ptr + offset) = color;
-	}
-	else
-		fprintf(stderr, \
-			"Warning: Attempted to access out-of-bounds offset at (%d, %d)\n"\
-			, x, y);
+	offset = (y * img->line_len + x * (img->bpp / 8));
+	*(unsigned int *)(img->pixels_ptr + offset) = color;
 }
 
-static void	mandel_vs_julia(t_complex *z, t_complex *c, t_fractal *fractal)
+static void	mandel_or_julia(t_complex *z, t_complex *c, t_fractal *fractal)
 {
 	if (!ft_strncmp(fractal->name, "julia", 5))
 	{
@@ -51,19 +45,19 @@ static void	handle_pixel(int x, int y, t_fractal *fractal)
 	i = 0;
 	z.x = (map(x, -2, +2, WIDTH) * fractal->zoom) + fractal->shift_x;
 	z.y = (map(y, +2, -2, HEIGHT) * fractal->zoom) + fractal->shift_y;
-	mandel_vs_julia(&z, &c, fractal);
+	mandel_or_julia(&z, &c, fractal);
 	while (i < fractal->iterations_definition)
 	{
 		z = sum_complex(square_complex(z), c);
 		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
 		{
 			color = map(i, BLACK, WHITE, fractal->iterations_definition);
-			my_pixel_put(x, y, &fractal->img, color);
+			ft_pixel_put(x, y, &fractal->img, color);
 			return ;
 		}
-		i++;
+		++i;
 	}
-	my_pixel_put(x, y, &fractal->img, WHITE);
+	ft_pixel_put(x, y, &fractal->img, WHITE);
 }
 
 void	fractal_render(t_fractal *fractal)
@@ -80,7 +74,7 @@ void	fractal_render(t_fractal *fractal)
 			handle_pixel(x, y, fractal);
 		}
 	}
-	mlx_put_image_to_window(fractal->mlx_connection, \
+	mlx_put_image_to_window(fractal->mlx_link, \
 							fractal->mlx_window, \
 							fractal->img.img_ptr, \
 							0, 0);

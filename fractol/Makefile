@@ -6,7 +6,7 @@
 #    By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/15 12:30:14 by seckhard          #+#    #+#              #
-#    Updated: 2024/01/15 18:43:43 by seckhard         ###   ########.fr        #
+#    Updated: 2024/01/19 21:39:08 by seckhard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,17 @@ NAME = fractol
 
 INCLUDE = -I fractol.h
 
-CFLAGS = -Wall -Wextra -Werror
-LIBC = ar rcs
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -Ofast -march=native
+LIBS = -lmlx -lX11 -lXext
 
 $(NAME): $(OBJECTS)
-	$(CC) -o $(NAME) $(OBJECTS) -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm -Ofast -march=native
+	$(CC) -o $(NAME) $(OBJECTS) $(LIBS) $(CFLAGS)
 
 all: $(NAME)
 
 %.o: %.c
-		$(CC) -c $(CFLAGS) $(INCLUDE) $?
+		$(CC) -c $(CFLAGS) $(INCLUDE) $< -o $@
 
 clean:
 			rm -f $(OBJECTS)
