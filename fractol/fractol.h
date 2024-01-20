@@ -6,7 +6,7 @@
 /*   By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 16:22:55 by seckhard          #+#    #+#             */
-/*   Updated: 2024/01/19 23:05:52 by seckhard         ###   ########.fr       */
+/*   Updated: 2024/01/20 16:00:05 by seckhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 void			putstr_fd(char *s, int fd);
 int				ft_strcmp(char *s1, char *s2);
 double			atodbl(char *s);
+int				is_valid_number(const char *str);
 
 //***initialization
 void			fractal_init(t_fractal *fractal);

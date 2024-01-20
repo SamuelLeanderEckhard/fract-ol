@@ -6,7 +6,7 @@
 /*   By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 16:56:25 by seckhard          #+#    #+#             */
-/*   Updated: 2024/01/19 23:04:01 by seckhard         ###   ########.fr       */
+/*   Updated: 2024/01/20 16:01:19 by seckhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-//***alpha to double
 double	atodbl(char *s)
 {
-	long	integer_part;
+	int		integer_part;
 	double	fractional_part;
 	double	power;
 	int		sign;
@@ -75,4 +74,27 @@ double	atodbl(char *s)
 		fractional_part = fractional_part + (*s++ - 48) * power;
 	}
 	return ((integer_part + fractional_part) * sign);
+}
+
+int	is_valid_number(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		while ((str[i] == ' ' || str[i] == '-' || str[i] == '+'))
+			i++;
+		if (str[i] == '\0' || (!((str[i] >= '0' && str[i] <= '9'))))
+			return (0);
+		while (str[i])
+		{
+			if ((str[i] >= '0' && str[i] <= '9') || (str[i] == '.'))
+				i++;
+			else
+				return (0);
+		}
+		break ;
+	}
+	return (1);
 }

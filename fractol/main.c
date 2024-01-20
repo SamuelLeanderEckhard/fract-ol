@@ -6,7 +6,7 @@
 /*   By: seckhard <seckhard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 16:31:56 by seckhard          #+#    #+#             */
-/*   Updated: 2024/01/19 22:12:25 by seckhard         ###   ########.fr       */
+/*   Updated: 2024/01/20 16:01:30 by seckhard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	main(int argc, char **argv)
 	t_fractal	fractal;
 
 	if ((argc == 2 && ft_strcmp(argv[1], "mandelbrot") == 0) \
-		|| (argc == 4 && ft_strcmp(argv[1], "julia") == 0))
+		|| (argc == 4 && ft_strcmp(argv[1], "julia") == 0 \
+		&& is_valid_number(argv[2]) && is_valid_number(argv[3])))
 	{
 		fractal.name = argv[1];
 		if (ft_strcmp(fractal.name, "julia") == 0)
